@@ -1,0 +1,16 @@
+﻿@model UrlModel
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div>
+    <h1 class="display-4 text-center">Bem vindo ao Encurta Ae</h1>
+    <form asp-action="ProcessUrl" method="post">
+        <div class="mb-3">
+            <label for="inputUrl" class="form-label">Insira seu link!</label>
+            <input type="text" class="form-control" id="inputUrl" name="InputUrl" aria-describedby="url" placeholder="https://seu-link-aqui.com">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
