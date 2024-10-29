@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using App.Models;
 
 namespace App.Controllers
@@ -7,10 +7,12 @@ namespace App.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -28,6 +30,8 @@ namespace App.Controllers
         {
             // Processar a URL aqui
             // Por exemplo, você pode salvar no banco de dados ou encurtar a URL
+            _context.Urls.Add(model);
+            _context.SaveChanges();
 
             // Redirecionar para a página inicial após o processamento
             return RedirectToAction("Index");
