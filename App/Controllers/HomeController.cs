@@ -29,8 +29,11 @@ namespace App.Controllers
             // Exibir no console a mensagem que o usuário digitou no formulário
             Console.WriteLine($"URL digitada: {model.InputUrl}");
 
-            // Salvar a URL no banco de dados
-            _dbService.CreateShortUrl(model.InputUrl);
+            // Salvar a URL no banco de dados e obter o link curto gerado
+            string shortUrl = _dbService.CreateShortUrl(model.InputUrl);
+
+            // Exibir o link curto no console
+            Console.WriteLine($"Link curto gerado: {shortUrl}");
 
             // Redirecionar para a página inicial após o processamento
             return RedirectToAction("Index");
