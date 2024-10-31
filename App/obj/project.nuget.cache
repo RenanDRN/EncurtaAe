@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "b5ecJDNAKQ6jYygRecePcMfFLEI2xowUCy1tirkIUQD/B6goGHP8frZN2sXj26yhso0fVu6AakQaOJ4lQLwY/A==",
+  "dgSpecHash": "stcZNATMjmyHSXMUz5DbRUK/HzXqCA6v5F8GVwAtraEn6xbJg90brQ+weYbybxeTHn8xWSg+dihCjXUAofIWNQ==",
   "success": true,
   "projectFilePath": "/home/renandrn/Área de trabalho/EncurtaAe/App/App.csproj",
   "expectedPackageFiles": [
     "/home/renandrn/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/home/renandrn/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
+    "/home/renandrn/.nuget/packages/microsoft.aspnetcore.authorization/8.0.10/microsoft.aspnetcore.authorization.8.0.10.nupkg.sha512",
+    "/home/renandrn/.nuget/packages/microsoft.aspnetcore.metadata/8.0.10/microsoft.aspnetcore.metadata.8.0.10.nupkg.sha512",
     "/home/renandrn/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/home/renandrn/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
     "/home/renandrn/.nuget/packages/microsoft.data.sqlclient/5.1.5/microsoft.data.sqlclient.5.1.5.nupkg.sha512",
