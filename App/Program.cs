@@ -41,4 +41,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "redirect",
+    pattern: "{hash}",
+    defaults: new { controller = "Home", action = "RedirectToOriginalUrl" });
+
 app.Run();

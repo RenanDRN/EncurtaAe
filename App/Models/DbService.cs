@@ -16,13 +16,8 @@ namespace App.Services
 
         public string CreateShortUrl(string url)
         {
-            // Gerar o hash da URL encurtada
             string shortUrl = GenerateRandomHash(6);
-
-            // Salvar a URL no banco de dados
             GeneratedShortUrl(url, shortUrl, DateTime.UtcNow);
-
-            // Retornar o link curto gerado
             return shortUrl;
         }
 
@@ -53,6 +48,26 @@ namespace App.Services
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public string GetOriginalUrl(string shortUrl)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand("SELECT original_url FROM url_shortener WHERE short_code = @shortUrl;", connection))
+                {
+                    command.Parameters.AddWithValue("@shortUrl", shortUrl);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return reader.GetString("original_url");
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }

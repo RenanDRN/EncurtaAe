@@ -13,8 +13,9 @@ namespace App.Controllers
             _dbService = dbService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string shortUrl = null)
         {
+            ViewBag.ShortUrl = shortUrl;
             return View();
         }
 
@@ -22,21 +23,25 @@ namespace App.Controllers
         {
             return View();
         }
-
+        
         [HttpPost]
         public IActionResult ProcessUrl(UrlModel model)
         {
-            // Exibir no console a mensagem que o usuário digitou no formulário
             Console.WriteLine($"URL digitada: {model.InputUrl}");
-
-            // Salvar a URL no banco de dados e obter o link curto gerado
             string shortUrl = _dbService.CreateShortUrl(model.InputUrl);
-
-            // Exibir o link curto no console
-            Console.WriteLine($"Link curto gerado: {shortUrl}");
-
-            // Redirecionar para a página inicial após o processamento
-            return RedirectToAction("Index");
+            string fullShortUrl = $"{Request.Scheme}://{Request.Host}/{shortUrl}";
+            Console.WriteLine($"Link curto gerado: {fullShortUrl}");
+            return RedirectToAction("Index", new { shortUrl = fullShortUrl });
         }
-    }
+        
+        [HttpGet("{hash}")]
+        public IActionResult RedirectToOriginalUrl(string hash)
+        {
+            string originalUrl = _dbService.GetOriginalUrl(hash);
+            if (originalUrl != null)
+            {
+                return Redirect(originalUrl);
+            }
+            return NotFound();
+        }    }
 }

@@ -13,4 +13,13 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    @if (ViewBag.ShortUrl != null)
+    {
+        <div class="mt-3">
+            <label for="shortUrl" class="form-label">Seu link encurtado:</label>
+            <input type="text" class="form-control" id="shortUrl" value="@ViewBag.ShortUrl" readonly>
+            <a href="@ViewBag.ShortUrl" class="btn btn-link mt-2">Acessar link</a>
+        </div>
+    }
 </div>
