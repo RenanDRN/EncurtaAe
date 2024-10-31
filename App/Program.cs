@@ -7,9 +7,11 @@ Env.Load();
 
 // Construir a string de conexão a partir das variáveis de ambiente
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
+                       $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
                        $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
                        $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
-                       $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
+                       $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};" +
+                       $"SslMode={Environment.GetEnvironmentVariable("DB_SSL_MODE")}";
 
 // Adicionar o DbService com a string de conexão
 builder.Services.AddSingleton(new DbService(connectionString));
