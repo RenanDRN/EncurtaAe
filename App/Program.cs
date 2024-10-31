@@ -1,4 +1,18 @@
+using DotNetEnv;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Carregar variáveis de ambiente do arquivo .env
+Env.Load();
+
+// Construir a string de conexão a partir das variáveis de ambiente
+var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
+                       $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+                       $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+                       $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
+
+// Adicionar o DbService com a string de conexão
+builder.Services.AddSingleton(new DbService(connectionString));
 
 // Adicione os serviços necessários
 builder.Services.AddControllersWithViews();
