@@ -43,5 +43,6 @@ namespace App.Controllers
                 return Redirect(originalUrl);
             }
             return NotFound();
-        }    }
+        }
+    }
 }
