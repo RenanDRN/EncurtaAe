@@ -30,7 +30,7 @@ namespace App.Controllers
             Console.WriteLine($"URL digitada: {model.InputUrl}");
 
             // Salvar a URL no banco de dados
-            _dbService.SaveUrl(model.InputUrl);
+            _dbService.CreateShortUrl(model.InputUrl);
 
             // Redirecionar para a página inicial após o processamento
             return RedirectToAction("Index");
