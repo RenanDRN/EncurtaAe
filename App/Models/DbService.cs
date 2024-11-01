@@ -17,7 +17,10 @@ namespace App.Services
         public string CreateShortUrl(string url)
         {
             string shortUrl = GenerateRandomHash(6);
-            GeneratedShortUrl(url, shortUrl, DateTime.UtcNow);
+            DateTime utcNow = DateTime.UtcNow;
+            TimeZoneInfo brasiliaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            DateTime brasiliaTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, brasiliaTimeZone);
+            GeneratedShortUrl(url, shortUrl, brasiliaTime);
             return shortUrl;
         }
 
@@ -68,6 +71,38 @@ namespace App.Services
                 }
             }
             return null;
+        }
+
+         public int GetShortUrlCount()
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand("SELECT COUNT(*) FROM url_shortener;", connection))
+                {
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
+
+        public List<string> GetLastFiveShortUrls()
+        {
+            var shortUrls = new List<string>();
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand("SELECT short_code FROM url_shortener ORDER BY created_at DESC LIMIT 5;", connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            shortUrls.Add(reader.GetString("short_code"));
+                        }
+                    }
+                }
+            }
+            return shortUrls;
         }
     }
 }

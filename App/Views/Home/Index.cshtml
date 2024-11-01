@@ -5,13 +5,13 @@
 }
 
 <div>
-    <h1 class="display-4 text-center">Bem vindo ao Encurta Ae</h1>
+    <h1 class="display-4 text-center">Bem vindo ao EncurtaAe 😎✌️</h1>
     <form asp-action="ProcessUrl" method="post">
         <div class="mb-3">
             <label for="inputUrl" class="form-label">Insira seu link!</label>
             <input type="text" class="form-control" id="inputUrl" name="InputUrl" aria-describedby="url" placeholder="https://seu-link-aqui.com">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">EncurtaAe</button>
     </form>
 
     @if (ViewBag.ShortUrl != null)
@@ -22,4 +22,37 @@
             <a href="@ViewBag.ShortUrl" class="btn btn-link mt-2">Acessar link</a>
         </div>
     }
+
+    <div class="mt-5">
+        <h2>Olha que bacana:</h2>
+        <p>Total de links encurtados: @ViewBag.ShortUrlCount</p>
+    
+        <b>Perdeu seu link? No problem... Clica ai pra ver os 5 últimos salvos:</b>\
+        <br>
+        <button id="showLinksButton" class="btn btn-secondary">Buscar</button>
+        <br>
+        <ul class="list-group" id="lastFiveLinks" style="display:none;">
+        </ul>
+    </div>
 </div>
+
+<script>
+    document.getElementById('showLinksButton').addEventListener('click', function() {
+        fetch('@Url.Action("GetLastFiveLinks", "Home")')
+            .then(response => response.json())
+            .then(data => {
+                const linksList = document.getElementById('lastFiveLinks');
+                linksList.innerHTML = '';
+                data.forEach(link => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    const linkElement = document.createElement('a');
+                    linkElement.href = link;
+                    linkElement.textContent = link;
+                    listItem.appendChild(linkElement);
+                    linksList.appendChild(listItem);
+                });
+                linksList.style.display = 'block';
+            });
+    });
+</script>

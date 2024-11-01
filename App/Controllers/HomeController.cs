@@ -16,6 +16,10 @@ namespace App.Controllers
         public IActionResult Index(string shortUrl = null)
         {
             ViewBag.ShortUrl = shortUrl;
+            ViewBag.ShortUrlCount = _dbService.GetShortUrlCount();
+            ViewBag.LastFiveLinks = _dbService.GetLastFiveShortUrls()
+                                              .Select(link => $"{Request.Scheme}://{Request.Host}/{link}")
+                                              .ToList();
             return View();
         }
 
@@ -43,6 +47,15 @@ namespace App.Controllers
                 return Redirect(originalUrl);
             }
             return NotFound();
+        }
+
+        [HttpGet]
+        public JsonResult GetLastFiveLinks()
+        {
+            var lastFiveLinks = _dbService.GetLastFiveShortUrls()
+                                          .Select(link => $"{Request.Scheme}://{Request.Host}/{link}")
+                                          .ToList();
+            return Json(lastFiveLinks);
         }
     }
 }
